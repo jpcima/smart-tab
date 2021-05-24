@@ -163,9 +163,9 @@ the text at point."
   (let* ((smart-tab-mode nil)
          (global-smart-tab-mode nil)
          (ev last-command-event)
-         (triggering-key (cl-case (type-of ev)
-                           (integer (char-to-string ev))
-                           (symbol (vector ev))))
+         (triggering-key (cond
+                           ((symbolp ev) (vector ev))
+                           ((integerp ev) (char-to-string ev))))
          (original-func (or (key-binding triggering-key)
                             (key-binding (lookup-key local-function-key-map
                                                      triggering-key))
